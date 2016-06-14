@@ -1,3 +1,18 @@
+The first character
+Abstract 
+
+I use the Euler method to tackle some simple problems of linear first-order differential equation,imitating the equilibrium process
+and the timely evolution curve is sketched.
+
+Background
+
+A simple numerical method,Euler method,for solving ordinary differential equations is proposed with a finite small approximation.
+The process of numerical solution appraoches the analytical solution.
+
+Text
+
+The codes are as follows:
+
 import matplotlib.pyplot as plt
 na=[]
 nb=[]
