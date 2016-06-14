@@ -1,0 +1,43 @@
+The character 1
+problem
+    consider a radioactive decay problem involving two types of nuclei,A and B,with populations NA(t) and NB(t).suppose that
+type A nuclei decay to form type B nuclei,which then also decay,according to the differential equations.
+Where ta and tb are the decay time constants for each type of nucleus. use the Euler method to solve these coupled equations
+for NA and NB as functions of time. This problem can also be solved exactly,as was the case with our original nuclear decay 
+problem. Obtain the analytic solutions for NA(t) and NB(t), and compare them with your numerical results, It is also interesting 
+to explore the behavior found for different values of the radio ta/tb. In particular,try to interpret the short and long time
+behaviors for different values of this ratio. 
+    Input the initialize of this radioactive decay problem,such as initial number of nuclei A
+Use the Euler approximation to do the calculation.
+
+Code
+import matplotlib.pyplot as a
+
+na=[]
+nb=[]
+t=[]
+
+na.append(float(raw_input("the initial number of nuclei A:")))
+ta=float(raw_input("the constant time of nuclei A:"))
+nb.append(float(raw_input("the initial number of nuclei B:")))
+tb=float(raw_input("the constant time of nuclei B:"))
+tt=float(raw_input("the total time:"))
+dt=float(raw_input("the time step:"))
+t.append(0)
+
+for i in range(int(tt/dt)):
+    nai=na[i]-na[i]/ta*dt
+    nbi=nb[i]+(na[i]/ta-nb[i]/tb)*dt
+    ti=t[i]+dt
+    na.append(nai)
+    nb.append(nbi)
+    t.append(ti)
+    
+a.plot(t,na,"b--",label="$A$",color="red",linewidth=2)
+a.plot(t,nb,"b--",label="$B$",color="blue",linewidth=2)
+a.xlabel("time(s)")
+a.ylabel("the number of the nuclei")
+a.grid()
+a.title("a radioactive decay problem involving two types of nuclei,A and B")
+a.legend()
+a.show
