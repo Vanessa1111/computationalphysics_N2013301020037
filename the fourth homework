@@ -1,0 +1,27 @@
+import matplotlib.pyplot as plt
+na=[]
+nb=[]
+t=[]na.append(float(raw_input("the initial number of nuclei A:")))
+ta=float(raw_input("the constant time of nuclei A:"))
+nb.append(float(raw_input("the initial number of nuclei B:")))
+tb=float(raw_input("the constant time of nuclei B:"))
+tt=float(raw_input("the total time:"))
+dt=float(raw_input("the time step:"))
+t.append(0)
+for i in range(int(end_time/dt)):
+	temp = v[i] + g * dt
+	v.append(temp)
+	t.append(dt * (i +1))
+	print t[-1],v[-1]
+	while tn[-1]<time:
+    Nn.append(Nn[-1]*(a*dt+1))
+    tn.append(tn[-1]+dt)
+# analytical solution
+ta=np.linspace(0,time,100)
+Na=Nn[0]*np.exp(a*ta)
+plt.plot(tn,Nn,color='red',linewidth=2.0,linestyle="-",label="Numerical")
+plt.plot(ta,Na,color='blue',linewidth=2.0,linestyle="-",label="Analytical")
+plt.legend(loc="upper left", frameon=True)
+plt.xlabel('t')
+plt.ylabel('N')
+plt.show()
