@@ -1,0 +1,103 @@
+    We now generalize our pendulum model to include the effects of friction and nonlinear and find that they give rise to the 
+possibiblity of chaoic behavior. While the term chaos probably has some intuitive meaning for all of us, it is not easy to give 
+a precise definition of this notion.
+    We consider a simplest model, so we ignore friction and assuming that the angle the string makes with the vertical is small.
+We used to calculate the model by using Euler method.but we find that this solution did not converse energy. Based on the form 
+situation we led to consider other methods of solving ordinary differential equations, like Runge-Kutta and Verlet methods. of 
+course, we could change a little of Euler method to be suitable to oscillatory motion.
+    Now that we have a numerical method that is suitable for various versions of the simple pendulum problem, and armed with 
+some understanding of what might or might not happen when dissipation, an external driving force, and/or nonlinearity is present, 
+we are ready to take on a slightly more complicated and also more interesting sitution. That is, we add all three ingredients which
+were previously only discussed separately. First, we do not assume the small-angle approximation, and thus do not expand sin(theta)term. 
+Second, we include friction of the form -q(d(theta)/dt). Third, we add to our model a sinusoidal driving force 
+F_Dsin(omega_D*t). Putting all of these ingredients together, we have the equation of motion.
+The codes are as follows:
+import math
+import matplotlib.pyplot as plt
+
+g=9.8
+l=9.8
+
+class chaoic:
+    def __init__(self,Fd=1.2,omegad=2./3,t_end=1000):
+        self.theta0=0.2
+        self.q=0.5
+        self.omega0=0
+        self.omegad=omegad
+        self.step=100
+        self.cycle=2*math.pi/self.omegad
+        self.dt=self.cycle/self.step
+        self.omegad=2./3
+        self.theta=[self.theta0]
+        self.omega=[self.omega0]
+        self.Fd=Fd
+        self.t=[0]
+        self.t_end=t_end
+    def phase(self):
+        while self.t[-1]<=self.t_end:
+            omegai=self.omega[-1]+(-math.sin(self.theta[-1])-self.q*self.omega[-1]+self.Fd*math.sin(self.omegad*self.t[-1]))*self.dt
+            self.omega.append(omegai)
+            thetai=self.theta[-1]+omegai*self.dt
+            if thetai>math.pi:
+                thetai-=2*math.pi
+            if thetai<-math.pi:
+                thetai+=2*math.pi
+            self.theta.append(thetai)
+            ti=self.t[-1]+self.dt
+            self.t.append(ti)
+            
+    def out_phase(self,ini,color,slogan):
+        self.n=int(self.t_end//self.cycle)
+        self.new_omega=[]
+        self.new_theta=[]
+        for i in range(self.n):
+            self.xxx=int((i+ini)*self.step)
+            self.new_omega.append(self.omega[self.xxx])
+            self.new_theta.append(self.theta[self.xxx])
+        plt.scatter(self.new_theta,self.new_omega,s=0.5,c=color,label=slogan)
+
+    def pl(self,style,slogan):
+        plt.plot(self.t,self.omega,style,label=slogan)
+     
+
+#     
+A=chaoic(Fd=2,t_end=50)
+A.phase()
+A.pl('r-','Fd=0.5')
+plt.subplot(111)
+plt.xlabel(r'$\theta$ [rad]')
+plt.ylabel(r'$\omega$ [$s^{-1}$]')
+plt.legend()
+plt.show()  
+     
+A=chaoic(Fd=1.2,omegad=3./4,t_end=5000)
+A.phase()
+plt.subplot(221)
+A.out_phase(ini=0,color='b',slogan=r'$t\approx 2\pi n/\Omega_D$')
+plt.xlabel('$\omega$(rad)')
+plt.ylabel('$\theta$(rad)')
+plt.grid()
+plt.legend()
+
+plt.subplot(222)
+A.out_phase(ini=0.25,color='b',slogan=r'$t\approx 2\pi n/\Omega_D+\pi/4$')
+plt.xlabel('$\omega$(rad)')
+plt.ylabel('$\theta$(rad)')
+plt.grid()
+plt.legend()
+
+plt.subplot(223)
+A.out_phase(ini=0.5,color='b',slogan=r'$t\approx 2\pi n/\Omega_D+\pi/2$')
+plt.xlabel('$\omega$(rad)')
+plt.ylabel('$\theta$(rad)')
+plt.grid()
+plt.legend()
+
+plt.subplot(224)
+A.out_phase(ini=0.75,color='b',slogan=r'$t\approx 2\pi n/\Omega_D+3\pi /4$')
+plt.xlabel('$\omega$(rad)')
+plt.ylabel('$\theta$(rad)')
+plt.grid()
+plt.legend()
+
+plt.show()
