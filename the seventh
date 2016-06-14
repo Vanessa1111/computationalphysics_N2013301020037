@@ -1,0 +1,62 @@
+The second character
+      In order to calculate the trajectory of a baseball,we need to solve the Euler equations , including the velocity dependence of 
+the drag force . Taking the results for the drag coefficient and adding in the appropriate factors of air density , and so on 
+, it turns out that the drag factor for a normal baseball is described reasonably well by the function.
+      To treat the problem of a thrown ball , we must deal with two different effects . One effect is the spin of the ball ;
+this will turn out to dominate the motion of a curve ball . The other effect concerns the drag coefficient .
+To calculate the trajectory of a curve ball , we have to consider motion in three dimensions . We will let x be the axis running
+from home plate to the pitcher , z be the horizontal direction perpendicular to x , and y be the height above the ground . 
+The codes are as follows:
+
+import math
+import matplotlib.pyplot as plt
+
+
+x=[0]
+vx=[]
+y=[]
+vy=[]
+z=[0]
+vz=[0]
+v=[]
+
+y.append(float(raw_input('the initial y coordinate is:')))
+v.append(float(raw_input('the initial velocity is:')))
+dt=float(raw_input('the time interval is:'))
+theta=math.radians(float(raw_input('the firing angel is:')))
+vx.append(v[0]*math.cos(theta))
+vy.append(v[0]*math.sin(theta))
+w=2000/60
+sm=0.00041
+g=10
+
+i=0
+while y[i]>=0:
+    xi=x[i]+vx[i]*dt
+    bmi=0.0039+0.0058/(1+math.exp((v[i]-35)/5))
+    vxi=vx[i]-bmi*v[i]*vx[i]*dt
+    yi=y[i]+vy[i]*dt
+    vyi=vy[i]-g*dt
+    zi=z[i]+vz[i]*dt
+    vzi=vz[i]-sm*vx[i]*w*dt
+    vi=math.sqrt(vxi**2+vyi**2+vzi**2)
+    x.append(xi)
+    vx.append(vxi)
+    y.append(yi)
+    vy.append(vyi)
+    z.append(zi)
+    vz.append(vzi)
+    v.append(vi)
+    i+=1
+
+del x[-1]
+del y[-1]
+del z[-1]
+
+f=a.figure()
+p=f.gca(projection='3d')
+p.plot(x,z,y)
+plt.xlabel('x/m')
+plt.ylabel('y/m')
+plt.zlabel('z/m')
+plt.show()
