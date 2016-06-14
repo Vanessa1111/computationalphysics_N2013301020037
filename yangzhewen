@@ -1,0 +1,49 @@
+ computationalphysics_N2013301020037
+   ! Here is my first vim program.And I spend a lot of time
+ to find out how to gei in it.
+   ! I'm going to make a program to calculate the quadratic equation.
+PROGRAM roots
+IMPLICIT NONE
+REAL::a
+REAL::b
+REAL::c
+REAL::discriminant
+REAL::imag_part
+REAL::real_part
+REAL::x1
+REAL::x2
+
+WRITE(*,*)'This program solves for the roots of a quadratic'
+WRITE(*,*)'equation of the form A*X**2+B*X+C=0'
+WRITE(*,*)'Enter the coefficients A,B,and C:'
+READ(*,*) a,b,c
+
+WRITE(*,*)'The coefficients A,B,and C are:',a,b,c
+discriminant=b**2-4.*a*c
+IF (discriminant>0) THEN
+x1=(-b+sqrt(discriminant))/(2.*a)
+     x2=(-b-sqrt(discriminant))/(2.*a)
+     WRITE(*,*)'This equation has two real roots:'
+     WRITE(*,*)'X1=',x1
+     WRITE(*,*)'X2=',x2
+ELSE IF (discriminant<0) THEN
+     real_part=(-b)/(2.*a)
+     imag_part=sqrt(abs(discriminant))/(2.*a)
+     WRITE(*,*)'This equation has complex roots:'
+     WRITE(*,*)'X1=',real_part,'+i',imag_part
+     WRITE(*,*)'X2=',real_part,'-i',imag_part
+ELSE
+    x1=(-b)/(2.*a)
+    WRITE(*,*)'This equation has two identical real roots:'
+    WRITE(*,*)'X1=X2=',x1
+END IF
+END PROGRAM roots 
+
+
+
+Just now I wrote a program and I'll write another one at present.
+ Why am I so silly to do the repeating work?
+Because I do forget to save my program!Damn it!
+
+I'm totally a layman for linux and vim.This afternoon I spent much time learning how to use the system of Ubuntu and how to use the terminal to do something.And it's really uneasy for me,a rookie newbie to do such a thing like contacting with new things.
+I wanna cry when I finally used vim  write something because it literally looks so easy and  it isn't for me in fact. 
